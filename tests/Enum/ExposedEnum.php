@@ -48,6 +48,11 @@ enum ExposedEnum
         return self::findAttribute($class, $case);
     }
 
+    /**
+     * @template T of CacheableAttributeInterface
+     *
+     * @param class-string<T> $class
+     */
     public static function tAttributeExists(
         string $class,
         self $case

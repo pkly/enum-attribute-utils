@@ -1,0 +1,31 @@
+{
+    "name": "pkly/enum-attribute-utils",
+    "description": "Helper for easy attribute load/cache/fetch etc. in PHP Enums",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pkly\\EnumAttributeUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pkly\\Tests\\EnumAttributeUtils\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pkly"
+        }
+    ],
+    "require": {
+        "php": ">=8.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12",
+        "friendsofphp/php-cs-fixer": "^3",
+        "pedrotroller/php-cs-custom-fixer": "^2",
+        "phpstan/phpstan": "^2",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    }
+}

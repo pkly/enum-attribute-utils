@@ -3,7 +3,7 @@
 namespace Pkly\EnumAttributeUtils;
 
 /**
- * @phpstan-type AttributeCache array<class-string<CacheableAttributeInterface>, array<string, list<CacheableAttributeInterface>>>
+ * @phpstan-type AttributeCacheArray array<class-string<CacheableAttributeInterface>, array<string, list<CacheableAttributeInterface>>>
  *
  * @internal
  */
@@ -12,7 +12,7 @@ class AttributeCache
     /**
      * Actual attribute cache for all enum cases and all attributes which were loaded.
      *
-     * @var array<class-string<\UnitEnum>, AttributeCache>
+     * @var array<class-string<\UnitEnum>, AttributeCacheArray>
      */
     private array $cache = [];
 
@@ -34,7 +34,7 @@ class AttributeCache
     /**
      * @param class-string<\UnitEnum> $class
      *
-     * @return AttributeCache
+     * @return AttributeCacheArray
      */
     public function get(
         string $class

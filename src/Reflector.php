@@ -3,7 +3,7 @@
 namespace Pkly\EnumAttributeUtils;
 
 /**
- * @phpstan-import-type AttributeCache from AttributeCache
+ * @phpstan-import-type AttributeCacheArray from AttributeCache
  *
  * @internal
  */
@@ -12,7 +12,7 @@ class Reflector
     /**
      * @param class-string<\UnitEnum> $class
      *
-     * @return AttributeCache
+     * @return AttributeCacheArray
      */
     public static function reflect(
         string $class

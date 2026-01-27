@@ -43,6 +43,6 @@ class AttributeCache
             $this->cache[$class] = Reflector::reflect($class);
         }
 
-        return $this->cache[$class] ?? [];
+        return $this->cache[$class];
     }
 }

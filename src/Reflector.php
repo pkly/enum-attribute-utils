@@ -33,6 +33,7 @@ class Reflector
                     continue;
                 }
 
+                /** @var CacheableAttributeInterface $instance */
                 $instance = $attributeReflection->newInstance();
 
                 if (!array_key_exists($attributeType, $loaded)) {

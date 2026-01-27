@@ -17,7 +17,7 @@ trait AttributeControlTrait
         string $class,
         \UnitEnum $case
     ): array {
-        return AttributeCache::instance()->get(static::class)[$class][$case->name] ?? [];
+        return AttributeCache::instance()->get(static::class)[$class][$case->name] ?? []; // @phpstan-ignore-line
     }
 
     /**

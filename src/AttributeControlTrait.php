@@ -22,6 +22,7 @@ trait AttributeControlTrait
         $attributes = AttributeCache::instance()->get(static::class)[$class][$case->name] ?? []; // @phpstan-ignore-line
 
         if (null !== $filter) {
+            /** @var T $attribute */
             foreach ($attributes as $index => $attribute) {
                 if (!$filter($attribute)) {
                     unset($attributes[$index]);
@@ -88,6 +89,7 @@ trait AttributeControlTrait
             $keys = [];
 
             foreach ($results as $case => $attributes) {
+                /** @var T $attribute */
                 foreach ($attributes as $attribute) {
                     if ($filter($attribute)) {
                         $keys[] = $case;

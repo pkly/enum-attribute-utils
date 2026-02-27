@@ -19,10 +19,10 @@ trait AttributeControlTrait
         \UnitEnum $case,
         callable|null $filter = null
     ): array {
+        /** @var list<T> $attributes */
         $attributes = AttributeCache::instance()->get(static::class)[$class][$case->name] ?? []; // @phpstan-ignore-line
 
         if (null !== $filter) {
-            /** @var T $attribute */
             foreach ($attributes as $index => $attribute) {
                 if (!$filter($attribute)) {
                     unset($attributes[$index]);

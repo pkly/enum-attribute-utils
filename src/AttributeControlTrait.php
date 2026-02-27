@@ -10,14 +10,29 @@ trait AttributeControlTrait
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter whether to return attribute
      *
      * @return list<T>
      */
     protected static function findAttributes(
         string $class,
-        \UnitEnum $case
+        \UnitEnum $case,
+        callable|null $filter = null
     ): array {
-        return AttributeCache::instance()->get(static::class)[$class][$case->name] ?? []; // @phpstan-ignore-line
+        /** @var list<T> $attributes */
+        $attributes = AttributeCache::instance()->get(static::class)[$class][$case->name] ?? []; // @phpstan-ignore-line
+
+        if (null !== $filter) {
+            foreach ($attributes as $index => $attribute) {
+                if (!$filter($attribute)) {
+                    unset($attributes[$index]);
+                }
+            }
+
+            $attributes = array_values($attributes);
+        }
+
+        return $attributes;
     }
 
     /**
@@ -26,14 +41,16 @@ trait AttributeControlTrait
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter whether to return attribute
      *
      * @return T|null
      */
     protected static function findAttribute(
         string $class,
-        \UnitEnum $case
+        \UnitEnum $case,
+        callable|null $filter = null
     ): object|null {
-        return self::findAttributes($class, $case)[0] ?? null;
+        return self::findAttributes($class, $case, $filter)[0] ?? null;
     }
 
     /**
@@ -42,12 +59,14 @@ trait AttributeControlTrait
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter whether to return attribute
      */
     protected static function attributeExists(
         string $class,
-        \UnitEnum $case
+        \UnitEnum $case,
+        callable|null $filter = null
     ): bool {
-        return null !== self::findAttribute($class, $case);
+        return null !== self::findAttribute($class, $case, $filter);
     }
 
     /**
@@ -56,15 +75,32 @@ trait AttributeControlTrait
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter whether to return case
      *
      * @return list<self>
      */
     protected static function findCases(
-        string $class
+        string $class,
+        callable|null $filter = null
     ): array {
-        return array_map(
-            static fn (string $case) => self::{$case},
-            array_keys(AttributeCache::instance()->get(static::class)[$class])
-        );
+        $results = AttributeCache::instance()->get(static::class)[$class];
+
+        if (null !== $filter) {
+            $keys = [];
+
+            foreach ($results as $case => $attributes) {
+                /** @var T $attribute */
+                foreach ($attributes as $attribute) {
+                    if ($filter($attribute)) {
+                        $keys[] = $case;
+                        break;
+                    }
+                }
+            }
+        } else {
+            $keys = array_keys($results);
+        }
+
+        return array_map(static fn (string $case) => self::{$case}, $keys);
     }
 }

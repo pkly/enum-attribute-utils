@@ -24,52 +24,60 @@ enum ExposedEnum
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter
      *
      * @return list<T>
      */
     public static function tFindAttributes(
         string $class,
-        self $case
+        self $case,
+        callable|null $filter = null
     ): array {
-        return self::findAttributes($class, $case);
+        return self::findAttributes($class, $case, $filter);
     }
 
     /**
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter
      *
      * @return T|null
      */
     public static function tFindAttribute(
         string $class,
-        self $case
+        self $case,
+        callable|null $filter = null
     ): object|null {
-        return self::findAttribute($class, $case);
+        return self::findAttribute($class, $case, $filter);
     }
 
     /**
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter
      */
     public static function tAttributeExists(
         string $class,
-        self $case
+        self $case,
+        callable|null $filter = null
     ): bool {
-        return self::attributeExists($class, $case);
+        return self::attributeExists($class, $case, $filter);
     }
 
     /**
      * @template T of CacheableAttributeInterface
      *
      * @param class-string<T> $class
+     * @param null|callable(T): bool $filter
      *
      * @return list<self>
      */
     public static function tFindCases(
-        string $class
+        string $class,
+        callable|null $filter = null
     ): array {
-        return self::findCases($class);
+        return self::findCases($class, $filter);
     }
 }

@@ -45,10 +45,16 @@ enum ExampleEnum
     {
         return self::findAttribute(CustomStuff::class, $this);
     }
+    
+    public function getCustomWithTrue(): CustomStuff|null
+    {
+        return self::findAttribute(CustomStuff::class, $this, static fn (CustomStuff $s) => $s->thing);    
+    }
 }
 ```
 
 See the trait for more methods.
+You can use the `$filter` parameter to better revise results, so that you don't have to create multiple classes to gain the same functionality.
 
 Attributes are preloaded once per enum and stored in AttributeCache.
 
